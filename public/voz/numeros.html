@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Números con Jessica · Mati</title>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: #3b2a5a;
+        background: #fff8ef;
+      }
+      header { max-width: 980px; margin: 0 auto 18px; }
+      h1 { margin: 0 0 6px; font-size: 28px; }
+      p { margin: 0; color: #6e5d92; line-height: 1.5; }
+      .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      button {
+        min-height: 46px;
+        padding: 0 20px;
+        border: 0;
+        border-radius: 14px;
+        background: #7c4dff;
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 0 #5b32c9;
+      }
+      button.secondary { background: #fff; color: #5a487c; box-shadow: 0 4px 0 #eadfd2; }
+      button:active { transform: translateY(2px); box-shadow: 0 2px 0 #5b32c9; }
+      button.secondary:active { box-shadow: 0 2px 0 #eadfd2; }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+        max-width: 980px;
+        margin: 18px auto 0;
+      }
+      .card {
+        padding: 12px;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 4px 0 #eadfd2;
+        text-align: center;
+      }
+      .card.playing { outline: 3px solid #ffb703; }
+      .num {
+        display: inline-grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #efe4ff;
+        color: #6a3de8;
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .word { display: block; margin: 6px 0 10px; font-size: 15px; color: #6e5d92; }
+      audio { width: 100%; height: 34px; display: block; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Números con Jessica</h1>
+      <p>Escucha del 1 al 20. Comprueba que todos se entienden bien y que suenan con el entusiasmo del juego. El 2 y el 11 parten de una voz castellana convertida a Jessica; el 3 y el 4 usan reglas de pronunciación. Si algo no suena bien, prueba las alternativas de <a href="./prueba-sts/">Jessica con voz nativa</a>.</p>
+      <div class="toolbar">
+        <button id="play-all" type="button">Reproducir todos</button>
+        <button id="stop-all" class="secondary" type="button">Parar</button>
+      </div>
+    </header>
+    <main class="grid" id="grid"></main>
+
+    <script>
+      const NUMBERS = [
+        [1, 'uno'],
+        [2, 'dos'],
+        [3, 'tres'],
+        [4, 'cuatro'],
+        [5, 'cinco'],
+        [6, 'seis'],
+        [7, 'siete'],
+        [8, 'ocho'],
+        [9, 'nueve'],
+        [10, 'diez'],
+        [11, 'once'],
+        [12, 'doce'],
+        [13, 'trece'],
+        [14, 'catorce'],
+        [15, 'quince'],
+        [16, 'dieciséis'],
+        [17, 'diecisiete'],
+        [18, 'dieciocho'],
+        [19, 'diecinueve'],
+        [20, 'veinte'],
+      ];
+
+      const grid = document.getElementById('grid');
+      const audios = [];
+
+      for (const [number, word] of NUMBERS) {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <span class="num">${number}</span>
+          <span class="word">${word}</span>
+          <audio controls preload="none" src="./clips/num-${number}.mp3"></audio>
+        `;
+        const audio = card.querySelector('audio');
+        audio.addEventListener('play', () => {
+          for (const other of audios) {
+            if (other !== audio) other.pause();
+          }
+          for (const otherCard of grid.children) otherCard.classList.remove('playing');
+          card.classList.add('playing');
+        });
+        audio.addEventListener('ended', () => card.classList.remove('playing'));
+        audios.push(audio);
+        grid.appendChild(card);
+      }
+
+      let playingAll = false;
+
+      function stopAll() {
+        playingAll = false;
+        for (const audio of audios) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        for (const card of grid.children) card.classList.remove('playing');
+      }
+
+      document.getElementById('stop-all').addEventListener('click', stopAll);
+
+      document.getElementById('play-all').addEventListener('click', async () => {
+        stopAll();
+        playingAll = true;
+        for (const audio of audios) {
+          if (!playingAll) return;
+          await new Promise((resolve) => {
+            const done = () => {
+              audio.removeEventListener('ended', done);
+              audio.removeEventListener('error', done);
+              resolve();
+            };
+            audio.addEventListener('ended', done);
+            audio.addEventListener('error', done);
+            audio.play().catch(done);
+          });
+          await new Promise((resolve) => setTimeout(resolve, 120));
+        }
+        playingAll = false;
+      });
+    </script>
+  </body>
+</html>

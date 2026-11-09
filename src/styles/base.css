@@ -1,0 +1,88 @@
+:root {
+  --ink: #3b2a5a;
+  --ink-soft: #6e5d92;
+  --touch: clamp(72px, 12vmin, 112px);
+  --gap: clamp(10px, 2.4vmin, 22px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  font-family: 'Fredoka Variable', 'Fredoka', 'Trebuchet MS', system-ui, sans-serif;
+  font-weight: 500;
+  color: var(--ink);
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #c8f0ff;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+#root {
+  position: fixed;
+  inset: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+button:focus-visible {
+  outline: 4px solid #fff;
+  outline-offset: 4px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+svg {
+  display: block;
+}
+
+.app {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  animation: screen-in 0.45s ease-out both;
+}

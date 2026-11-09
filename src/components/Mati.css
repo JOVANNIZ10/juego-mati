@@ -1,0 +1,200 @@
+.mati {
+  --mati-size: 200px;
+  position: relative;
+  flex: none;
+  width: var(--mati-size);
+  aspect-ratio: 200 / 220;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  animation: mati-bob 3.2s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mati__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 8px 0 rgba(59, 42, 90, 0.14));
+}
+
+.mati__arm {
+  transform-box: view-box;
+  transform-origin: 58px 132px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mati__arm--right {
+  transform-origin: 142px 132px;
+}
+
+.mati__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mati-blink 4.6s ease-in-out infinite;
+}
+
+.mati__mouth--open,
+.mati__mouth--o,
+.mati__eyes--happy {
+  display: none;
+}
+
+.mati--wave .mati__arm--right {
+  transform: rotate(-115deg);
+  animation: mati-wave 0.45s ease-in-out infinite alternate;
+}
+
+.mati--happy {
+  animation: mati-hop 0.7s ease-out 2;
+}
+
+.mati--happy .mati__arm--left {
+  transform: rotate(40deg);
+}
+
+.mati--celebrate {
+  animation: mati-jump 0.95s cubic-bezier(0.3, 0.7, 0.4, 1) 2;
+}
+
+.mati--celebrate .mati__arm--left {
+  transform: rotate(150deg);
+}
+
+.mati--celebrate .mati__arm--right {
+  transform: rotate(-150deg);
+}
+
+.mati--encourage {
+  animation: mati-wiggle 0.7s ease-in-out 2;
+}
+
+.mati--encourage .mati__arm--right {
+  transform: rotate(-130deg);
+}
+
+.mati--surprise {
+  animation: mati-startle 0.8s ease-out 1;
+}
+
+.mati--surprise .mati__eye {
+  animation: none;
+  transform: scale(1.2);
+}
+
+.mati--happy .mati__mouth--smile,
+.mati--celebrate .mati__mouth--smile,
+.mati--surprise .mati__mouth--smile {
+  display: none;
+}
+
+.mati--happy .mati__mouth--open,
+.mati--celebrate .mati__mouth--open {
+  display: inline;
+}
+
+.mati--surprise .mati__mouth--o {
+  display: inline;
+}
+
+.mati--happy .mati__eyes--open,
+.mati--celebrate .mati__eyes--open {
+  display: none;
+}
+
+.mati--happy .mati__eyes--happy,
+.mati--celebrate .mati__eyes--happy {
+  display: inline;
+}
+
+@keyframes mati-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes mati-blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes mati-wave {
+  from {
+    transform: rotate(-128deg);
+  }
+  to {
+    transform: rotate(-98deg);
+  }
+}
+
+@keyframes mati-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-18px);
+  }
+  70% {
+    transform: translateY(0) scale(1.04, 0.96);
+  }
+}
+
+@keyframes mati-jump {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  12% {
+    transform: translateY(6px) scale(1.06, 0.92);
+  }
+  45% {
+    transform: translateY(-38px) scale(0.97, 1.04);
+  }
+  70% {
+    transform: translateY(0) scale(1.08, 0.92);
+  }
+}
+
+@keyframes mati-wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-7deg);
+  }
+  75% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes mati-startle {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.12) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.04) rotate(4deg);
+  }
+  75% {
+    transform: scale(1.06) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

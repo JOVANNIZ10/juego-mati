@@ -1,0 +1,48 @@
+.effects {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+}
+
+.confetti__piece {
+  position: absolute;
+  top: -24px;
+  border-radius: 3px;
+  animation-name: confetti-fall;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: both;
+}
+
+.confetti__piece.is-round {
+  border-radius: 50%;
+}
+
+.burst {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.burst__particle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  border-radius: 50%;
+  background: var(--c);
+  animation: burst-fly 0.85s cubic-bezier(0.15, 0.7, 0.35, 1) forwards;
+}
+
+.burst__particle.is-star {
+  border-radius: 0;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}

@@ -1,0 +1,205 @@
+.discover {
+  display: flex;
+}
+
+.color-dot {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 30%,
+    var(--dot-light) 0 10%,
+    var(--dot) 45%,
+    var(--dot-dark) 100%
+  );
+  box-shadow: 0 12px 0 rgba(59, 42, 90, 0.18), inset 0 -10px 0 rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.color-dot.is-white {
+  box-shadow: inset 0 0 0 7px #e3e9f5, 0 12px 0 rgba(59, 42, 90, 0.18);
+}
+
+.color-dot:active {
+  transform: scale(0.94);
+}
+
+.balloons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 4vmin, 40px);
+}
+
+.balloon {
+  width: clamp(110px, min(26vmin, 28vw), 240px);
+  aspect-ratio: 100 / 130;
+  animation: balloon-float 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -1.1s);
+}
+
+.balloon:active {
+  transform: scale(0.94);
+}
+
+.balloon .balloon-art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.color-quiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 2vmin, 16px);
+}
+
+.color-quiz__object {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-quiz__object .color-quiz__art {
+  width: min(44vmin, 360px);
+  height: min(44vmin, 360px);
+  animation: hub-float 4s ease-in-out infinite;
+}
+
+.color-quiz__options {
+  flex: 0 0 auto;
+  display: flex;
+  gap: clamp(14px, 4vmin, 40px);
+}
+
+.color-chip {
+  width: clamp(96px, min(22vmin, 24vw), 200px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.8) 0 8%, var(--chip) 40%, var(--chip) 100%);
+  box-shadow: 0 12px 0 rgba(59, 42, 90, 0.2), inset 0 -10px 0 rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.color-chip.is-white {
+  box-shadow: inset 0 0 0 7px #e3e9f5, 0 12px 0 rgba(59, 42, 90, 0.2);
+}
+
+.color-chip:active {
+  transform: translateY(8px);
+}
+
+.factory {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 2vmin, 16px);
+}
+
+.factory__stage {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 1vmin, 10px);
+}
+
+.factory__hint {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(13px, 1.8vmin, 16px);
+  text-align: center;
+}
+
+.factory__canvas {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.factory__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.factory__region {
+  stroke: var(--ink);
+  stroke-width: 6;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill 0.3s ease;
+}
+
+.factory__palette {
+  --dot-size: clamp(56px, 11vmin, 92px);
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, var(--dot-size));
+  justify-content: center;
+  gap: clamp(8px, 2vmin, 14px);
+}
+
+.palette-dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 8px 0 rgba(59, 42, 90, 0.2), inset 0 -6px 0 rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.palette-dot.is-white {
+  box-shadow: inset 0 0 0 5px #e3e9f5, 0 8px 0 rgba(59, 42, 90, 0.2);
+}
+
+.palette-dot.is-selected {
+  transform: scale(1.18);
+  outline: 5px solid #fff;
+  outline-offset: 2px;
+}
+
+@keyframes balloon-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(3deg);
+  }
+}
+
+@media (orientation: landscape) {
+  .color-quiz {
+    flex-direction: row;
+  }
+
+  .color-quiz__options {
+    flex-direction: column;
+  }
+
+  .factory {
+    flex-direction: row;
+  }
+
+  .factory__stage {
+    align-self: stretch;
+    min-width: 0;
+  }
+
+  .factory__palette {
+    grid-template-columns: repeat(2, var(--dot-size));
+  }
+}
